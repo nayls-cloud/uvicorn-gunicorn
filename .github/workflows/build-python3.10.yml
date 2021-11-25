@@ -1,0 +1,99 @@
+name: Python3.10 - docker build and push images to dockerhub
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  python310-slim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build python3.10-slim
+        run: |
+          docker build \
+            -t naylscloud/uvicorn-gunicorn:3.10-slim \
+            -f ./3.10/python3.10-slim.dockerfile \
+            ./3.10
+          docker push naylscloud/uvicorn-gunicorn:3.10-slim
+    
+  python310-slim-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build python3.10-slim-sdk
+        run: |
+          docker build \
+            -t naylscloud/uvicorn-gunicorn:3.10-slim-sdk \
+            -f ./3.10/python3.10-slim-sdk.dockerfile \
+            ./3.10
+          docker push naylscloud/uvicorn-gunicorn:3.10-slim-sdk
+
+  python310-slim-poetry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build python3.10-slim-poetry
+        run: |
+          docker build \
+            -t naylscloud/uvicorn-gunicorn:3.10-slim-poetry \
+            -f ./3.10/python3.10-slim-poetry.dockerfile \
+            ./3.10
+          docker push naylscloud/uvicorn-gunicorn:3.10-slim-poetry
+
+  python310-slim-poetry-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build python3.10-slim-poetry-sdk
+        run: |
+          docker build \
+            -t naylscloud/uvicorn-gunicorn:3.10-slim-poetry-sdk \
+            -f ./3.10/python3.10-slim-poetry-sdk.dockerfile \
+            ./3.10
+          docker push naylscloud/uvicorn-gunicorn:3.10-slim-poetry-sdk
